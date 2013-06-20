@@ -1,8 +1,12 @@
-#### tweet_cloud
+# tweet_cloud
+
+---
 
 tweet cloud generator.
 
-##### Requirements
+# Requirements
+
+---
 
 * PyTagCloud
 
