@@ -1,7 +1,7 @@
 ## tweet_cloud
 ---
 
-tweet cloud is command line tool. 
+tweet cloud is a command line tool. 
 
 ## Requirements
 ---
