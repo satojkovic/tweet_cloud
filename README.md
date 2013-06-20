@@ -1,11 +1,9 @@
-# tweet_cloud
-
+## tweet_cloud
 ---
 
-tweet cloud generator.
+tweet cloud is command line tool. 
 
-# Requirements
-
+## Requirements
 ---
 
 * PyTagCloud
