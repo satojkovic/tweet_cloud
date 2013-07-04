@@ -13,20 +13,33 @@ import csv
 from docopt import docopt
 import re
 
+class Tweets(object):
+    def __init__(self):
+        self.text = []
+
+    def read_from_file(self, name):
+        """
+        read tweets from file
+        """
+        cr = csv.reader(open(name, 'r'), delimiter=',')
+        for row in cr:
+            tweet = row[-1]
+            self.text.append(tweet)
+
+    def show(self):
+        """
+        show tweets
+        """
+        for t in self.text:
+            print t
+
 def main():
     args = docopt(__doc__, version="1.0")
-
     f = args['-f']
-    cr = csv.reader(open(f, 'r'), delimiter=',')
-    for row in cr:
-        tweet = row[-1]
-        tweet_date = "YYYY-MM-DD HH:MM:SS"
-        for r in row:
-            s = re.search('((\d+)-(\d+)-(\d+) (\d+):(\d+):(\d+))', r)
-            if s is not None:
-                tweet_date = s.group(1)
 
-        print tweet_date, tweet
+    tw = Tweets()
+    tw.read_from_file(f)
+    tw.show()
 
 if __name__ == '__main__':
     main()
