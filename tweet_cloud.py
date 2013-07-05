@@ -15,6 +15,7 @@ import re
 
 class Tweets(object):
     def __init__(self):
+        self.word_count = {}
         self.text = []
         self.num_tweets = 0
 
@@ -50,7 +51,16 @@ class Tweets(object):
         """
         count word in each tweets
         """
-        pass
+        mecab = MeCab.Tagger('-Owakati')
+
+        for i in range(self.num_tweets):
+            words = mecab.parse(self.text[i]).strip("\n").split(" ")
+            for w in words:
+                self.word_count[w] = self.word_count[w]+1 if w in self.word_count else 1
+
+    def show_word_count(self):
+        for k, v in sorted(self.word_count.items(), key=lambda x:x[1]):
+            print k, v
 
 def main():
     args = docopt(__doc__, version="1.0")
@@ -58,7 +68,9 @@ def main():
 
     tw = Tweets()
     tw.read_from_file(f)
-    tw.show()
+
+    tw.count_word()
+    tw.show_word_count()
 
 if __name__ == '__main__':
     main()
