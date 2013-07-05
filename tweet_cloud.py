@@ -16,6 +16,7 @@ import re
 class Tweets(object):
     def __init__(self):
         self.text = []
+        self.num_tweets = 0
 
     def read_from_file(self, name):
         """
@@ -24,7 +25,19 @@ class Tweets(object):
         cr = csv.reader(open(name, 'r'), delimiter=',')
         for row in cr:
             tweet = row[-1]
+            if self._is_exclude(tweet):
+                continue
             self.text.append(tweet)
+            self.num_tweets += 1
+
+    def _is_exclude(self, tweet):
+        if re.match('RT ', tweet) or re.match('"', tweet) or \
+                re.match('http', tweet) or re.match('\[', tweet) or \
+                re.match('bookmarked:', tweet) or re.match('ugomemo_bot:', tweet) or \
+                re.match('FYI:', tweet) or re.match('Link:', tweet):
+            return True
+        else:
+            return False
 
     def show(self):
         """
@@ -32,6 +45,12 @@ class Tweets(object):
         """
         for t in self.text:
             print t
+
+    def count_word(self):
+        """
+        count word in each tweets
+        """
+        pass
 
 def main():
     args = docopt(__doc__, version="1.0")
