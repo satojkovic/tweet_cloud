@@ -51,12 +51,26 @@ class Tweets(object):
         """
         count word in each tweets
         """
-        mecab = MeCab.Tagger('-Owakati')
-
         for i in range(self.num_tweets):
-            words = mecab.parse(self.text[i]).strip("\n").split(" ")
+            words = self.get_noun(self.text[i])
             for w in words:
                 self.word_count[w] = self.word_count[w]+1 if w in self.word_count else 1
+
+    def get_noun(self, text):
+        """
+        """
+        noun = []
+        mc = MeCab.Tagger('-Owakati')
+
+        node = mc.parseToNode(text)
+        while node:
+            if node.feature.split(",")[0] == "名詞" and \
+                    (node.feature.split(",")[1] == "一般" or node.feature.split(",")[1] == "固有名詞"):
+                noun.append(node.surface)
+            node = node.next
+        
+        return noun
+        
 
     def show_word_count(self):
         for k, v in sorted(self.word_count.items(), key=lambda x:x[1]):
