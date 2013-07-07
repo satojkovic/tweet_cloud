@@ -60,17 +60,17 @@ class Tweets(object):
         """
         """
         noun = []
-        mc = MeCab.Tagger('-Owakati')
+        mc = MeCab.Tagger('-Ochasen')
 
         node = mc.parseToNode(text)
         while node:
-            if node.feature.split(",")[0] == "名詞" and \
-                    (node.feature.split(",")[1] == "一般" or node.feature.split(",")[1] == "固有名詞"):
-                noun.append(node.surface)
+            if node.feature.split(",")[0] == "名詞":
+                replace_node = re.sub(re.compile("[!-/:-@[-`{-~(\d)]|([a-zA-Z])"), "", node.surface)
+                if replace_node != "" and replace_node != " ":
+                    noun.append(replace_node)
             node = node.next
         
         return noun
-        
 
     def show_word_count(self):
         for k, v in sorted(self.word_count.items(), key=lambda x:x[1]):
