@@ -31,7 +31,7 @@ class Tweets(object):
 
     def read_from_file(self, name):
         """
-        read tweets from file
+        read tweets from file(default: tweets.csv)
         """
         cr = csv.reader(open(name, 'r'), delimiter=',')
         for row in cr:
@@ -68,6 +68,7 @@ class Tweets(object):
 
     def get_noun(self, text):
         """
+        get noun
         """
         noun = []
         mc = MeCab.Tagger('-Ochasen')
