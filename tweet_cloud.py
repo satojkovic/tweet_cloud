@@ -75,9 +75,9 @@ class Tweets(object):
 
         node = mc.parseToNode(text)
         while node:
-            if node.feature.split(",")[0] == "名詞":
+            if node.feature.split(',')[1] == "固有名詞":
                 replace_node = re.sub(re.compile("[!-/:-@[-`{-~(\d)]|([a-zA-Z])"), "", node.surface)
-                if replace_node != "" and replace_node != " ":
+                if replace_node != "" and replace_node != " " and replace_node != "ー":
                     noun.append(replace_node)
             node = node.next
         
